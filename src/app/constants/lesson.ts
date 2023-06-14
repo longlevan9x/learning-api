@@ -1,0 +1,10 @@
+export const SECTIONS = {
+  VOCABULARY: 'VOCABULARY',
+  GRAMMAR: 'GRAMMAR',
+  READING_PRACTICE: 'READING_PRACTICE',
+  KANJI: 'KANJI',
+};
+
+export default {
+  SECTIONS: SECTIONS,
+};

@@ -12,7 +12,7 @@ export class LessonModel {
   bookId: string;
 
   @Prop()
-  lessonType: string;
+  sections: string[];
 }
 
 export const LessonSchema = SchemaFactory.createForClass(LessonModel);
