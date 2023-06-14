@@ -10,6 +10,9 @@ export class BookModel {
 
   @Prop()
   categoryId: string;
+
+  @Prop()
+  image: string;
 }
 
 export const BookSchema = SchemaFactory.createForClass(BookModel);

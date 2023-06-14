@@ -23,4 +23,8 @@ export class BookRepository {
   update(id: string, data: UpdateBookDto) {
     return this.bookModel.findByIdAndUpdate(id, data);
   }
+
+  remove(id: string) {
+    return this.bookModel.findByIdAndDelete(id);
+  }
 }

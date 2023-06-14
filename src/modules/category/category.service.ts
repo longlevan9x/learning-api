@@ -1,13 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { UpdateCategoryDto } from './dto/update-category.dto';
-import { CreateBookDto } from '../book/dto/create-book.dto';
 import { CategoryRepository } from '../../app/repositories/category.repository';
+import { CreateCategoryDto } from './dto/create-category.dto';
 
 @Injectable()
 export class CategoryService {
-  constructor(private categoryRepository: CategoryRepository) {}
-  create(createBookDto: CreateBookDto) {
-    return this.categoryRepository.create(createBookDto);
+  constructor(private categoryRepository: CategoryRepository) {
+  }
+
+  create(createCategoryDto: CreateCategoryDto) {
+    return this.categoryRepository.create(createCategoryDto);
   }
 
   findAll() {
@@ -21,7 +23,8 @@ export class CategoryService {
   update(id: string, updateCategoryDto: UpdateCategoryDto) {
     return this.categoryRepository.update(id, updateCategoryDto);
   }
-  remove(id: number) {
-    return `This action removes a #${id} category`;
+
+  remove(id: string) {
+    return this.categoryRepository.remove(id);
   }
 }

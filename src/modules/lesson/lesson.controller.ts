@@ -24,11 +24,11 @@ export class LessonController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateLessonDto: UpdateLessonDto) {
-    return this.lessonService.update(+id, updateLessonDto);
+    return this.lessonService.update(id, updateLessonDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.lessonService.remove(+id);
+    return this.lessonService.remove(id);
   }
 }

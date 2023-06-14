@@ -23,4 +23,8 @@ export class CategoryRepository {
   update(id: string, data: UpdateCategoryDto) {
     return this.categoryModel.findByIdAndUpdate(id, data);
   }
+
+  remove(id: string) {
+    return this.categoryModel.findByIdAndDelete(id);
+  }
 }

@@ -24,7 +24,7 @@ export class BookService {
     return this.bookRepository.update(id, updateBookDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} book`;
+  remove(id: string) {
+    return this.bookRepository.remove(id);
   }
 }
