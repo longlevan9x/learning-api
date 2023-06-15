@@ -8,6 +8,7 @@ import { LessonModule } from './modules/lesson/lesson.module';
 import { CategoryModule } from './modules/category/category.module';
 import { RouterModule } from '@nestjs/core';
 import { appRoutes } from './app.routes';
+import { CloneModule } from './modules/clone/clone.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { appRoutes } from './app.routes';
     BookModule,
     LessonModule,
     CategoryModule,
+    CloneModule,
   ],
   controllers: [AppController],
   providers: [AppService],

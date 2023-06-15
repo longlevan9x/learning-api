@@ -9,8 +9,9 @@ import { CreateCategoryDto } from '../../modules/category/dto/create-category.dt
 export class CategoryRepository {
   constructor(
     @InjectModel(CategoryModel.name)
-    private categoryModel: Model<CategoryModel>,
-  ) {}
+    private categoryModel: Model<CategoryModel>
+  ) {
+  }
 
   findAll() {
     return this.categoryModel.find();
@@ -26,5 +27,13 @@ export class CategoryRepository {
 
   remove(id: string) {
     return this.categoryModel.findByIdAndDelete(id);
+  }
+
+  removeAll() {
+    return this.categoryModel.deleteMany({});
+  }
+
+  bulkCreate(listCate) {
+    return this.categoryModel.insertMany(listCate);
   }
 }

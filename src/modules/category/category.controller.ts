@@ -26,6 +26,11 @@ export class CategoryController {
     return this.categoryService.findAll();
   }
 
+  @Get('/clone')
+  clone() {
+    return this.categoryService.clone();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.categoryService.findOne(+id);
