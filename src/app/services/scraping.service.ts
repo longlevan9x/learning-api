@@ -95,54 +95,70 @@ export class ScrapingService {
       'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36',
     );
 
-    // await page.waitForNavigation();
-    //
-    // await page.click('a[href="' + scrapingUrl + '"]');
-    // // await page.waitForSelector('a#tuvung');
+    // const vocabularies = await this.scrapingMinnaBook(page);
+    const vocabularies = await this.scrapingN2SoumatomeKanji(page);
+
+    await browser.close();
+    console.log('scrapingVocabulary done');
+
+    return vocabularies.filter((v) => v);
+  }
+
+  async scrapingN2SoumatomeKanji(page) {
+    return page.$$eval('table.khung2 > tbody > tr', (elements) => {
+      return elements.map((element) => {
+        const kanjiElem = element.cells.item(0);
+        const vnSoundElem = element.cells.item(1);
+        const vocabularyElem = element.cells.item(2);
+        const meanElem = element.cells.item(3);
+
+        return {
+          vocabulary: vocabularyElem.textContent?.trim(),
+          kanji: kanjiElem.textContent?.trim(),
+          vietnam_sound: vnSoundElem.textContent?.trim(),
+          mean: meanElem.textContent?.trim(),
+        };
+      });
+    });
+  }
+
+  async scrapingMinnaBook(page) {
     const vocabularyUrl = await page.$eval('#tuvung', (element) => {
       return element.getAttribute('href');
     });
 
     await page.goto(this.baseUrl + vocabularyUrl);
 
-    const vocabularies = await page.$$eval(
-      'table.search_result > tbody > tr',
-      (elements) => {
-        return elements.map((element) => {
-          if (element.childElementCount === 5) {
-            const vocabularyElem = element.cells.item(0);
-            const kanjiElem = element.cells.item(1);
-            const vnSoundElem = element.cells.item(2);
-            const mediaElem = element.cells.item(3);
-            const meanElem = element.cells.item(4);
+    return page.$$eval('table.search_result > tbody > tr', (elements) => {
+      return elements.map((element) => {
+        if (element.childElementCount === 5) {
+          const vocabularyElem = element.cells.item(0);
+          const kanjiElem = element.cells.item(1);
+          const vnSoundElem = element.cells.item(2);
+          const mediaElem = element.cells.item(3);
+          const meanElem = element.cells.item(4);
 
-            return {
-              vocabulary: vocabularyElem.textContent?.trim(),
-              kanji: kanjiElem.textContent?.trim(),
-              vietnam_sound: vnSoundElem.textContent?.trim(),
-              mediaUrl: mediaElem.querySelector('audio').getAttribute('src'),
-              mean: meanElem.textContent?.trim(),
-            };
-          } else if (element.childElementCount === 3) {
-            const vocabularyElem = element.cells.item(0);
-            const mediaElem = element.cells.item(1);
-            const meanElem = element.cells.item(2);
+          return {
+            vocabulary: vocabularyElem.textContent?.trim(),
+            kanji: kanjiElem.textContent?.trim(),
+            vietnam_sound: vnSoundElem.textContent?.trim(),
+            mediaUrl: mediaElem.querySelector('audio').getAttribute('src'),
+            mean: meanElem.textContent?.trim(),
+          };
+        } else if (element.childElementCount === 3) {
+          const vocabularyElem = element.cells.item(0);
+          const mediaElem = element.cells.item(1);
+          const meanElem = element.cells.item(2);
 
-            return {
-              vocabulary: vocabularyElem.textContent?.trim(),
-              mediaUrl: mediaElem.querySelector('audio').getAttribute('src'),
-              mean: meanElem.textContent?.trim(),
-            };
-          } else {
-            return null;
-          }
-        });
-      },
-    );
-
-    await browser.close();
-    console.log('scrapingVocabulary done');
-
-    return vocabularies.filter((v) => v);
+          return {
+            vocabulary: vocabularyElem.textContent?.trim(),
+            mediaUrl: mediaElem.querySelector('audio').getAttribute('src'),
+            mean: meanElem.textContent?.trim(),
+          };
+        } else {
+          return null;
+        }
+      });
+    });
   }
 }

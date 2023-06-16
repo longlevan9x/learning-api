@@ -12,8 +12,12 @@ export class LessonVocabularyRepository {
     private lessonVocabularyModel: Model<LessonVocabularyModel>,
   ) {}
 
-  findAll() {
-    return this.lessonVocabularyModel.find();
+  findAll(query) {
+    if (!query.lessonId) {
+      query = {};
+    }
+
+    return this.lessonVocabularyModel.find(query);
   }
 
   create(data: CreateLessonVocabularyDto) {

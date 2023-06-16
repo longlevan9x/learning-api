@@ -5,7 +5,7 @@ import {
   Body,
   Patch,
   Param,
-  Delete,
+  Delete, Query
 } from '@nestjs/common';
 import { LessonVocabularyService } from './lesson-vocabulary.service';
 import { CreateLessonVocabularyDto } from './dto/create-lesson-vocabulary.dto';
@@ -23,8 +23,8 @@ export class LessonVocabularyController {
   }
 
   @Get()
-  findAll() {
-    return this.lessonVocabularyService.findAll();
+  findAll(@Query() query) {
+    return this.lessonVocabularyService.findAll(query);
   }
 
   @Post('/scraping')
