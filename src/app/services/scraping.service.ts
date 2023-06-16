@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import puppeteer from 'puppeteer';
+// import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
 
 @Injectable()
 export class ScrapingService {
