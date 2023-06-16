@@ -7,15 +7,16 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe());
 
-  app.enableCors({
-    origin: function (origin, callback) {
-      callback(null, true);
-      // if (!origin || whitelist.indexOf(origin) !== -1) {
-      // } else {
-      //   callback(new Error('Not allowed by CORS'))
-      // }
-    },
-  });
+  app.enableCors();
+  // app.enableCors({
+  //   origin: function (origin, callback) {
+  //     callback(null, true);
+  //     // if (!origin || whitelist.indexOf(origin) !== -1) {
+  //     // } else {
+  //     //   callback(new Error('Not allowed by CORS'))
+  //     // }
+  //   },
+  // });
 
   await app.listen(3000);
 }
