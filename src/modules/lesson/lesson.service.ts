@@ -12,16 +12,20 @@ export class LessonService {
   constructor(
     private lessonRepository: LessonRepository,
     private categoryRepository: CategoryRepository,
-    private scrapingService: ScrapingService
-  ) {
-  }
+    private scrapingService: ScrapingService,
+  ) {}
 
   create(createLessonDto: CreateLessonDto) {
     return this.lessonRepository.create(createLessonDto);
   }
 
-  findAll() {
-    return this.lessonRepository.findAll();
+  findAll(query?: { categoryId?: string }) {
+    const _query: any = {};
+    if (query.categoryId) {
+      _query.categoryId = query.categoryId;
+    }
+
+    return this.lessonRepository.findAll(_query);
   }
 
   findOne(id: number) {
@@ -42,7 +46,9 @@ export class LessonService {
 
   async clone(categoryId: string) {
     const category = await this.categoryRepository.findOneById(categoryId);
-    let lessons: any[] = await this.scrapingService.scrapingLesson(category.cloneUrl);
+    let lessons: any[] = await this.scrapingService.scrapingLesson(
+      category.cloneUrl,
+    );
 
     lessons = lessons.map((l) => {
       l.categoryId = categoryId;

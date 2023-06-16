@@ -6,7 +6,7 @@ import {
   Patch,
   Param,
   Delete,
-  Put
+  Put, Query
 } from '@nestjs/common';
 import { LessonService } from './lesson.service';
 import { CreateLessonDto } from './dto/create-lesson.dto';
@@ -23,8 +23,8 @@ export class LessonController {
   }
 
   @Get()
-  findAll() {
-    return this.lessonService.findAll();
+  findAll(@Query() query) {
+    return this.lessonService.findAll(query);
   }
 
   @Get('/sections')

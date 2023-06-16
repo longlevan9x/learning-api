@@ -13,10 +13,6 @@ export class LessonVocabularyRepository {
   ) {}
 
   findAll(query?: { lessonId: string } | any) {
-    if (!query.lessonId) {
-      query = {};
-    }
-
     return this.lessonVocabularyModel.find(query);
   }
 

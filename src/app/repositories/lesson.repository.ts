@@ -12,8 +12,8 @@ export class LessonRepository {
     private lessonModel: Model<LessonModel>,
   ) {}
 
-  findAll() {
-    return this.lessonModel.find();
+  findAll(query?: { categoryId?: string } | any) {
+    return this.lessonModel.find(query);
   }
 
   create(data: CreateLessonDto) {

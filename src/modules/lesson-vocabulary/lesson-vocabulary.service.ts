@@ -8,15 +8,21 @@ import { LessonVocabularyRepository } from '../../app/repositories/lessonVocabul
 export class LessonVocabularyService {
   constructor(
     private scrapingService: ScrapingService,
-    private lessonVocabularyRepository: LessonVocabularyRepository,
-  ) {}
+    private lessonVocabularyRepository: LessonVocabularyRepository
+  ) {
+  }
 
   create(createLessonVocabularyDto: CreateLessonVocabularyDto) {
     return 'This action adds a new lessonVocabulary';
   }
 
   findAll(query?: { lessonId: string }) {
-    return this.lessonVocabularyRepository.findAll(query);
+    const _query: any = {};
+    if (query.lessonId) {
+      _query.lessonId = query.lessonId;
+    }
+
+    return this.lessonVocabularyRepository.findAll(_query);
   }
 
   findOne(id: number) {
@@ -33,7 +39,7 @@ export class LessonVocabularyService {
 
   async scraping(lessonId: string, scrapingUrl: string) {
     let vocabularies: any[] = await this.scrapingService.scrapingVocabulary(
-      scrapingUrl,
+      scrapingUrl
     );
 
     vocabularies = vocabularies.map((v) => {
