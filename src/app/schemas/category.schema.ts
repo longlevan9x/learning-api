@@ -1,4 +1,4 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { MongooseModule, Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 
 export type CategoryDocument = HydratedDocument<CategoryModel>;
@@ -10,7 +10,18 @@ export class CategoryModel {
 
   @Prop()
   parentId: string;
+
+  @Prop()
+  cloneUrl: string;
 }
 
 export const CategorySchema = SchemaFactory.createForClass(CategoryModel);
 export const CategoryTableName = 'categories';
+
+export const CategorySchemaModule = MongooseModule.forFeature([
+  {
+    name: CategoryModel.name,
+    schema: CategorySchema,
+    collection: CategoryTableName,
+  },
+]);

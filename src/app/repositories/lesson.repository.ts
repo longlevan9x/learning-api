@@ -27,4 +27,8 @@ export class LessonRepository {
   remove(id: string) {
     return this.lessonModel.findByIdAndDelete(id);
   }
+
+  bulkCreate(listCreate) {
+    return this.lessonModel.insertMany(listCreate);
+  }
 }

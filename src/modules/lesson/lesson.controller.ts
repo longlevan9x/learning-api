@@ -6,7 +6,7 @@ import {
   Patch,
   Param,
   Delete,
-  Put,
+  Put
 } from '@nestjs/common';
 import { LessonService } from './lesson.service';
 import { CreateLessonDto } from './dto/create-lesson.dto';
@@ -14,7 +14,8 @@ import { UpdateLessonDto } from './dto/update-lesson.dto';
 
 @Controller()
 export class LessonController {
-  constructor(private readonly lessonService: LessonService) {}
+  constructor(private readonly lessonService: LessonService) {
+  }
 
   @Post()
   create(@Body() createLessonDto: CreateLessonDto) {
@@ -29,6 +30,11 @@ export class LessonController {
   @Get('/sections')
   findAllSection() {
     return this.lessonService.findAllSection();
+  }
+
+  @Post('/clone')
+  clone(@Body() body: any) {
+    return this.lessonService.clone(body.categoryId);
   }
 
   @Get(':id')

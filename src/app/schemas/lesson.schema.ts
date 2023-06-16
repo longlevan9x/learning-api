@@ -1,4 +1,4 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { MongooseModule, Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 
 export type LessonDocument = HydratedDocument<LessonModel>;
@@ -12,8 +12,21 @@ export class LessonModel {
   bookId: string;
 
   @Prop()
+  categoryId: string;
+
+  @Prop()
   sections: string[];
+
+  @Prop()
+  cloneUrl: string;
 }
 
 export const LessonSchema = SchemaFactory.createForClass(LessonModel);
 export const LessonTableName = 'lessons';
+export const LessonSchemaModule = MongooseModule.forFeature([
+  {
+    name: LessonModel.name,
+    schema: LessonSchema,
+    collection: LessonTableName,
+  },
+]);

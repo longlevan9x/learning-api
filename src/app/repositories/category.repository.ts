@@ -9,12 +9,15 @@ import { CreateCategoryDto } from '../../modules/category/dto/create-category.dt
 export class CategoryRepository {
   constructor(
     @InjectModel(CategoryModel.name)
-    private categoryModel: Model<CategoryModel>
-  ) {
-  }
+    private categoryModel: Model<CategoryModel>,
+  ) {}
 
   findAll() {
     return this.categoryModel.find();
+  }
+
+  findOneById(id) {
+    return this.categoryModel.findById(id);
   }
 
   create(data: CreateCategoryDto) {

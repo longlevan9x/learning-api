@@ -9,6 +9,8 @@ import { CategoryModule } from './modules/category/category.module';
 import { RouterModule } from '@nestjs/core';
 import { appRoutes } from './app.routes';
 import { CloneModule } from './modules/clone/clone.module';
+import { LessonVocabularyModule } from './modules/lesson-vocabulary/lesson-vocabulary.module';
+import { ScrapingService } from './app/services/scraping.service';
 
 @Module({
   imports: [
@@ -22,8 +24,9 @@ import { CloneModule } from './modules/clone/clone.module';
     LessonModule,
     CategoryModule,
     CloneModule,
+    LessonVocabularyModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, ScrapingService],
 })
 export class AppModule {}

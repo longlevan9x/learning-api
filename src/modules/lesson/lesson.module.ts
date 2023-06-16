@@ -1,25 +1,20 @@
 import { Module } from '@nestjs/common';
 import { LessonService } from './lesson.service';
 import { LessonController } from './lesson.controller';
-import { MongooseModule } from '@nestjs/mongoose';
-import {
-  LessonModel,
-  LessonSchema,
-  LessonTableName,
-} from '../../app/schemas/lesson.schema';
-import { LessonRepository } from '../../app/repositories/lesson.repository';
+import { CategorySchemaModule } from 'src/app/schemas/category.schema';
+import { ScrapingService } from 'src/app/services/scraping.service';
+import { CategoryRepository } from 'src/app/repositories/category.repository';
+import { LessonRepository } from 'src/app/repositories/lesson.repository';
+import { LessonSchemaModule } from 'src/app/schemas/lesson.schema';
 
 @Module({
-  imports: [
-    MongooseModule.forFeature([
-      {
-        name: LessonModel.name,
-        schema: LessonSchema,
-        collection: LessonTableName,
-      },
-    ]),
-  ],
+  imports: [LessonSchemaModule, CategorySchemaModule],
   controllers: [LessonController],
-  providers: [LessonService, LessonRepository],
+  providers: [
+    LessonService,
+    LessonRepository,
+    CategoryRepository,
+    ScrapingService,
+  ],
 })
 export class LessonModule {}
