@@ -15,7 +15,7 @@ export class LessonVocabularyService {
     return 'This action adds a new lessonVocabulary';
   }
 
-  findAll(query) {
+  findAll(query?: { lessonId: string }) {
     return this.lessonVocabularyRepository.findAll(query);
   }
 

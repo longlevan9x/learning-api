@@ -12,7 +12,7 @@ export class LessonVocabularyRepository {
     private lessonVocabularyModel: Model<LessonVocabularyModel>,
   ) {}
 
-  findAll(query) {
+  findAll(query?: { lessonId: string } | any) {
     if (!query.lessonId) {
       query = {};
     }
