@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
-// import puppeteer from 'puppeteer';
-import puppeteer from 'puppeteer-core';
+import puppeteer from 'puppeteer';
+
+// import puppeteer from 'puppeteer-core';
 
 @Injectable()
 export class ScrapingService {
@@ -69,14 +70,17 @@ export class ScrapingService {
       'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36',
     );
 
-    const lessons = await page.$$eval('.category tr > td > a', (elements) => {
-      return elements.map((e) => {
-        return {
-          cloneUrl: e.getAttribute('href'),
-          name: e.textContent,
-        };
-      });
-    });
+    const lessons: any[] = await page.$$eval(
+      '.category tr > td > a',
+      (elements) => {
+        return elements.map((e) => {
+          return {
+            cloneUrl: e.getAttribute('href'),
+            name: e.textContent,
+          };
+        });
+      },
+    );
 
     await browser.close();
     console.log('scrapingLesson done');

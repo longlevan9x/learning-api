@@ -32,9 +32,9 @@ export class LessonController {
     return this.lessonService.findAllSection();
   }
 
-  @Post('/clone')
-  clone(@Body() body: any) {
-    return this.lessonService.clone(body.categoryId);
+  @Post('/scraping')
+  scraping(@Body() body: any) {
+    return this.lessonService.scraping(body.categoryId);
   }
 
   @Get(':id')

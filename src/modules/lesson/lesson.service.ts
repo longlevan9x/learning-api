@@ -25,7 +25,7 @@ export class LessonService {
       _query.categoryId = query.categoryId;
     }
 
-    return this.lessonRepository.findAll(_query);
+    return this.lessonRepository.findAll(_query).limit(100);
   }
 
   findOne(id: number) {
@@ -44,7 +44,7 @@ export class LessonService {
     return Object.keys(lesson.SECTIONS);
   }
 
-  async clone(categoryId: string) {
+  async scraping(categoryId: string) {
     const category = await this.categoryRepository.findOneById(categoryId);
     let lessons: any[] = await this.scrapingService.scrapingLesson(
       category.cloneUrl,
