@@ -5,7 +5,8 @@ import {
   Body,
   Patch,
   Param,
-  Delete, Query
+  Delete,
+  Query,
 } from '@nestjs/common';
 import { LessonVocabularyService } from './lesson-vocabulary.service';
 import { CreateLessonVocabularyDto } from './dto/create-lesson-vocabulary.dto';
