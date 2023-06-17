@@ -29,6 +29,7 @@ export class LessonVocabularyController {
 
   @Post('/scraping')
   scraping(@Body() body) {
+    return process.env;
     return this.lessonVocabularyService.scraping(
       body.lessonId,
       body.scrapingUrl,

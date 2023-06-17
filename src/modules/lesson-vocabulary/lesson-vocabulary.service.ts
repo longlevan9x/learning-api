@@ -37,7 +37,6 @@ export class LessonVocabularyService {
   }
 
   async scraping(lessonId: string, scrapingUrl: string) {
-    return process.env;
     let vocabularies: any[] = await this.scrapingService.scrapingVocabulary(
       scrapingUrl,
     );
