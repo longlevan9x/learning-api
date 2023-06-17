@@ -25,13 +25,11 @@ export class LessonVocabularyController {
 
   @Get()
   findAll(@Query() query) {
-    return process.env;
     return this.lessonVocabularyService.findAll(query);
   }
 
   @Post('/scraping')
   scraping(@Body() body) {
-    return process.env;
     return this.lessonVocabularyService.scraping(
       body.lessonId,
       body.scrapingUrl,
