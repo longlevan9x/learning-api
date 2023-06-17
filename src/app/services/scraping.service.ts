@@ -1,44 +1,21 @@
 import { Injectable } from '@nestjs/common';
-// import puppeteer from 'puppeteer';
-// import puppeteer from 'puppeteer-core';
-let chrome: any = {};
-let puppeteer;
-
-if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
-  // running on the Vercel platform.
-  chrome = require('chrome-aws-lambda');
-  puppeteer = require('puppeteer-core');
-  // import chrome from 'chrome-aws-lambda';
-  // import puppeteer from 'puppeteer-core';
-} else {
-  // running locally.
-  puppeteer = require('puppeteer');
-}
+import puppeteer from 'puppeteer';
 
 @Injectable()
 export class ScrapingService {
   baseUrl = 'https://www.vnjpclub.com/';
 
   async launchBrowser() {
-    let options: any = {
+    const options: any = {
       headless: false,
       ignoreHTTPSErrors: true,
     };
 
-    if (process.env.AWS_LAMBDA_FUNCTION_VERSION) {
-      options = {
-        args: [...chrome?.args, '--hide-scrollbars', '--disable-web-security'],
-        defaultViewport: chrome?.defaultViewport,
-        executablePath: await chrome?.executablePath,
-        headless: false,
-        ignoreHTTPSErrors: true,
-      };
-    }
     return await puppeteer.launch(options);
   }
 
   async scrapingCategory() {
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await this.launchBrowser() ;
     const page = await browser.newPage();
 
     await page.goto(this.baseUrl);
@@ -89,7 +66,7 @@ export class ScrapingService {
   }
 
   async scrapingLesson(scrapingUrl: string) {
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await this.launchBrowser();
     const page = await browser.newPage();
     const url = this.baseUrl + scrapingUrl;
 
@@ -119,7 +96,6 @@ export class ScrapingService {
   }
 
   async scrapingVocabulary(scrapingUrl) {
-    // const browser = await puppeteer.launch({ headless: false });
     const browser = await this.launchBrowser();
     const page = await browser.newPage();
     const url = this.baseUrl + scrapingUrl;
