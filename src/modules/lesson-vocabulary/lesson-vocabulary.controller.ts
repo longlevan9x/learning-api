@@ -24,6 +24,7 @@ export class LessonVocabularyController {
 
   @Get()
   findAll(@Query() query) {
+    return process.env;
     return this.lessonVocabularyService.findAll(query);
   }
 
