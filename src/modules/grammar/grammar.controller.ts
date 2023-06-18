@@ -5,13 +5,14 @@ import {
   Body,
   Patch,
   Param,
-  Delete, Query
+  Delete,
+  Query,
 } from '@nestjs/common';
 import { GrammarService } from './grammar.service';
 import { CreateGrammarDto } from './dto/create-grammar.dto';
 import { UpdateGrammarDto } from './dto/update-grammar.dto';
 
-@Controller('grammar')
+@Controller()
 export class GrammarController {
   constructor(private readonly grammarService: GrammarService) {}
 

@@ -10,7 +10,6 @@ import { RouterModule } from '@nestjs/core';
 import { appRoutes } from './app.routes';
 import { CloneModule } from './modules/clone/clone.module';
 import { VocabularyModule } from './modules/vocabulary/vocabulary.module';
-import { ScrapingService } from './app/services/scraping.service';
 import { GrammarModule } from './modules/grammar/grammar.module';
 
 @Module({
@@ -29,6 +28,6 @@ import { GrammarModule } from './modules/grammar/grammar.module';
     GrammarModule,
   ],
   controllers: [AppController],
-  providers: [AppService, ScrapingService],
+  providers: [AppService],
 })
 export class AppModule {}

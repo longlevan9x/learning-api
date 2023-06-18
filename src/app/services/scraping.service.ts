@@ -118,8 +118,10 @@ export class ScrapingService {
     );
 
     let listScraping: any = [];
-    listScraping = await this.scrapingGrammar(scrapingUrl);
+    listScraping = await this.scrapingForSelectorNguphap(page);
     await browser.close();
+    console.log('scrapingGrammar done');
+
     return listScraping.filter((v) => v);
   }
 
@@ -186,6 +188,64 @@ export class ScrapingService {
     return page.$$eval('div.tab_content#tab3 .slide', (elements) => {
       return elements.map((element) => {
         const grammarTitle = element.querySelector('.slide-title').textContent;
+        const trElementContents = element.querySelectorAll(
+          '.khung > tbody > tr',
+        );
+
+        const labels = [
+          'Cấu trúc',
+          'Ý nghĩa',
+          'Giải thích & Hướng dẫn',
+          'Ví dụ',
+        ];
+
+        let listMapping = [];
+        trElementContents.forEach((trElem) => {
+          const tdElems = trElem.querySelectorAll('td');
+
+          let tdTextIndex = 1;
+          if (trElem.childElementCount === 1) {
+            tdTextIndex = 0;
+          }
+
+          const tdText = tdElems[tdTextIndex].textContent?.trim();
+
+          if (labels.includes(tdText)) {
+            listMapping.push({ title: tdText });
+          } else {
+            const lastIndex = listMapping.length - 1;
+            if (listMapping[lastIndex].title === 'Ví dụ') {
+              if (!listMapping[lastIndex]?.content?.length) {
+                listMapping[lastIndex].content = [];
+              }
+
+              const wordRaw =
+                trElem.querySelector('.tudich .candich').textContent;
+              const wordTranslate = trElem.querySelector(
+                '.tudich .kqdich .nddich',
+              ).textContent;
+              listMapping[lastIndex].content.push({
+                wordRaw,
+                wordTranslate,
+              });
+            } else {
+              listMapping[lastIndex].content =
+                trElem.querySelectorAll('td')[1].innerHTML;
+            }
+          }
+        });
+
+        const keyLabel = {
+          ['Cấu trúc']: 'structure',
+          ['Ý nghĩa']: 'mean',
+          ['Giải thích & Hướng dẫn']: 'explain',
+          ['Ví dụ']: 'examples',
+        };
+        listMapping = listMapping.reduce((newObj, listChild) => {
+          newObj[keyLabel[listChild.title]] = listChild.content;
+          return newObj;
+        }, {});
+        return listMapping;
       });
     });
   }

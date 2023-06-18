@@ -1,4 +1,10 @@
-import { MongooseModule, Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import {
+  MongooseModule,
+  Prop,
+  raw,
+  Schema,
+  SchemaFactory,
+} from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 
 export type GrammarDocument = HydratedDocument<GrammarModel>;
@@ -9,7 +15,7 @@ export class GrammarModel {
   name: string;
 
   @Prop()
-  bookId: string;
+  lessonId: string;
 
   @Prop()
   structure: string;
@@ -20,8 +26,13 @@ export class GrammarModel {
   @Prop()
   mean: string;
 
-  @Prop()
-  examples: string[];
+  @Prop([
+    raw({
+      wordRaw: { type: String },
+      wordTranslate: { type: String },
+    }),
+  ])
+  examples: Record<any, any>[];
 
   @Prop()
   cloneUrl: string;

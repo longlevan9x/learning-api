@@ -45,7 +45,7 @@ export class GrammarService {
       v.lessonId = lessonId.toString();
       return v;
     });
-
+    console.log(listScraping[0]);
     await this.grammarRepository.bulkDelete({ lessonId });
     await this.grammarRepository.bulkCreate(listScraping);
 
