@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import puppeteer from 'puppeteer';
+import puppeteer, { Page } from 'puppeteer';
+
 // import chromium from 'chrome-aws-lambda';
 
 @Injectable()
@@ -104,7 +105,7 @@ export class ScrapingService {
     return lessons;
   }
 
-  async scrapingVocabulary(scrapingUrl) {
+  async scrapingGrammar(scrapingUrl: string) {
     const browser = await this.launchBrowser();
     const page = await browser.newPage();
     const url = this.baseUrl + scrapingUrl;
@@ -116,16 +117,39 @@ export class ScrapingService {
       'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36',
     );
 
-    // const vocabularies = await this.scrapingMinnaBook(page);
-    const vocabularies = await this.scrapingN2SoumatomeKanji(page);
+    let listScraping: any = [];
+    listScraping = await this.scrapingGrammar(scrapingUrl);
+    await browser.close();
+    return listScraping.filter((v) => v);
+  }
+
+  async scrapingVocabulary(scrapingUrl: string) {
+    const browser = await this.launchBrowser();
+    const page = await browser.newPage();
+    const url = this.baseUrl + scrapingUrl;
+
+    await page.goto(url);
+    // Set screen size
+    await page.setViewport({ width: 1080, height: 1024 });
+    await page.setUserAgent(
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36',
+    );
+
+    let vocabularies: any = [];
+
+    vocabularies = await this.scrapingForSelectorTuvung(page);
+    vocabularies = await this.scrapingForSelectorKhung2(page);
 
     await browser.close();
     console.log('scrapingVocabulary done');
-
     return vocabularies.filter((v) => v);
   }
 
-  async scrapingN2SoumatomeKanji(page) {
+  async scrapingForSelectorKhung2(page: Page) {
+    if (!(await this.isSelectorExists(page, 'table.khung2'))) {
+      return [];
+    }
+
     return page.$$eval('table.khung2 > tbody > tr', (elements) => {
       return elements.map((element) => {
         const kanjiElem = element.cells.item(0);
@@ -143,7 +167,34 @@ export class ScrapingService {
     });
   }
 
-  async scrapingMinnaBook(page) {
+  async isSelectorExists(page: Page, selector: string) {
+    return page.$(selector);
+  }
+
+  async scrapingForSelectorNguphap(page: Page) {
+    const selector = '#nguphap';
+    if (!(await this.isSelectorExists(page, selector))) {
+      return [];
+    }
+
+    const grammarUrl = await page.$eval(selector, (element) => {
+      return element.getAttribute('href');
+    });
+
+    await page.goto(this.baseUrl + grammarUrl);
+
+    return page.$$eval('div.tab_content#tab3 .slide', (elements) => {
+      return elements.map((element) => {
+        const grammarTitle = element.querySelector('.slide-title').textContent;
+      });
+    });
+  }
+
+  async scrapingForSelectorTuvung(page: Page) {
+    if (!(await this.isSelectorExists(page, '#tuvung'))) {
+      return [];
+    }
+
     const vocabularyUrl = await page.$eval('#tuvung', (element) => {
       return element.getAttribute('href');
     });

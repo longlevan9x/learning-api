@@ -9,8 +9,9 @@ import { CategoryModule } from './modules/category/category.module';
 import { RouterModule } from '@nestjs/core';
 import { appRoutes } from './app.routes';
 import { CloneModule } from './modules/clone/clone.module';
-import { LessonVocabularyModule } from './modules/lesson-vocabulary/lesson-vocabulary.module';
+import { VocabularyModule } from './modules/vocabulary/vocabulary.module';
 import { ScrapingService } from './app/services/scraping.service';
+import { GrammarModule } from './modules/grammar/grammar.module';
 
 @Module({
   imports: [
@@ -24,7 +25,8 @@ import { ScrapingService } from './app/services/scraping.service';
     LessonModule,
     CategoryModule,
     CloneModule,
-    LessonVocabularyModule,
+    VocabularyModule,
+    GrammarModule,
   ],
   controllers: [AppController],
   providers: [AppService, ScrapingService],

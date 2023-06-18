@@ -2,7 +2,8 @@ import { Routes } from '@nestjs/core';
 import { BookModule } from './modules/book/book.module';
 import { CategoryModule } from './modules/category/category.module';
 import { LessonModule } from './modules/lesson/lesson.module';
-import { LessonVocabularyModule } from './modules/lesson-vocabulary/lesson-vocabulary.module';
+import { VocabularyModule } from './modules/vocabulary/vocabulary.module';
+import { GrammarModule } from './modules/grammar/grammar.module';
 
 export const appRoutes: Routes = [
   {
@@ -19,6 +20,10 @@ export const appRoutes: Routes = [
   },
   {
     path: 'vocabularies',
-    module: LessonVocabularyModule,
+    module: VocabularyModule,
+  },
+  {
+    path: 'grammars',
+    module: GrammarModule,
   },
 ];
