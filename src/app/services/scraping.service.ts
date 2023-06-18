@@ -9,6 +9,7 @@ export class ScrapingService {
 
   async launchBrowser() {
     const options: any = {
+      args: ['--hide-scrollbars', '--disable-web-security'],
       headless: false,
       ignoreHTTPSErrors: true,
     };
@@ -22,6 +23,28 @@ export class ScrapingService {
     // });
 
     return await puppeteer.launch(options);
+  }
+
+  async scrapingPageHtml(url: string) {
+    const browser = await this.launchBrowser();
+    const page = await browser.newPage();
+
+    await page.goto(this.baseUrl + url, { waitUntil: 'networkidle0' });
+    // await page.goto(this.baseUrl + url, { waitUntil: 'domcontentloaded' });
+    // Set screen size
+    // await page.setViewport({ width: 500, height: 500 });
+    await page.setUserAgent(
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36',
+    );
+
+    // const html = await page.content();
+    const html = await page.$eval('#rt-mainbody', (element) => {
+      return element.innerHTML;
+    });
+
+    await browser.close();
+
+    return html;
   }
 
   async scrapingCategory() {
