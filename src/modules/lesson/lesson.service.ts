@@ -4,7 +4,6 @@ import { UpdateLessonDto } from './dto/update-lesson.dto';
 import { LessonRepository } from '../../app/repositories/lesson.repository';
 import lesson from '../../app/constants/lesson';
 import { CategoryRepository } from '../../app/repositories/category.repository';
-import puppeteer from 'puppeteer';
 import { ScrapingService } from '../../app/services/scraping.service';
 
 @Injectable()

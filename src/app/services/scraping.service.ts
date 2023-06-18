@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import puppeteer from 'puppeteer';
+// import puppeteer from 'puppeteer';
+import chromium from 'chrome-aws-lambda';
 
 @Injectable()
 export class ScrapingService {
@@ -11,11 +12,19 @@ export class ScrapingService {
       ignoreHTTPSErrors: true,
     };
 
-    return await puppeteer.launch(options);
+    return await chromium.puppeteer.launch({
+      args: [...chromium.args, '--hide-scrollbars', '--disable-web-security'],
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath,
+      headless: true,
+      ignoreHTTPSErrors: true,
+    });
+
+    // return await puppeteer.launch(options);
   }
 
   async scrapingCategory() {
-    const browser = await this.launchBrowser() ;
+    const browser = await this.launchBrowser();
     const page = await browser.newPage();
 
     await page.goto(this.baseUrl);
