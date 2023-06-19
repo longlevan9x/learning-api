@@ -25,6 +25,28 @@ export class ScrapingService {
     return await puppeteer.launch(options);
   }
 
+  async scrapingSoumatomeNgheHieuUrl(url) {
+    const browser = await this.launchBrowser();
+    const page = await browser.newPage();
+
+    await page.goto(this.baseUrl + url, { waitUntil: 'networkidle0' });
+    // await page.goto(this.baseUrl + url, { waitUntil: 'domcontentloaded' });
+    // Set screen size
+    // await page.setViewport({ width: 500, height: 500 });
+    await page.setUserAgent(
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36',
+    );
+
+    const urls = await page.$$eval(
+      '#rt-mainbody .category-list .category tr td a',
+      (elements) => elements.map((element) => element.getAttribute('href')),
+    );
+
+    await browser.close();
+
+    return urls;
+  }
+
   async scrapingPageHtml(url: string) {
     const browser = await this.launchBrowser();
     const page = await browser.newPage();

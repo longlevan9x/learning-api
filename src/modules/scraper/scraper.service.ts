@@ -32,28 +32,104 @@ export class ScraperService {
   }
 
   async scraping() {
+    return { message: 'done' };
+
+    const book = 'somatome-n3';
+    // const book = 'somatome-n2';
+    const sections = [
+      // 'tu-vung',
+      // 'ngu-phap',
+      // 'han-tu',
+      // 'doc-hieu',
+      // 'nghe-hieu',
+    ];
+
+    const scraping = async (section, week, lesson) => {
+      if (week === 1 && lesson === 1) {
+        lesson = '';
+      } else {
+        lesson = `-${lesson}`;
+      }
+
+      const url = `${book}-${section}/tuan-${week}${lesson}.html`;
+      this.minnaUrlVocabularies.push(url);
+
+      const html = await this.scrapingService.scrapingPageHtml(url);
+
+      this.saveFile(
+        `\\${book}\\${section}\\tuan-${week}${lesson || '-1'}-${section}.html`,
+        html,
+      );
+    };
+
+    const scrapingNgheHieu = async (url, section) => {
+      this.minnaUrlVocabularies.push(url);
+      const _us = url.split('/');
+      const _u = _us[_us.length - 1].replace('.html', '');
+      const html = await this.scrapingService.scrapingPageHtml(url);
+      this.saveFile(`\\${book}\\${section}\\${_u}-${section}.html`, html);
+    };
+
+    for (const section of sections) {
+      // nghe hieu
+      // const urls = await this.scrapingService.scrapingSoumatomeNgheHieuUrl(
+      //   `${book}-${section}`,
+      // );
+      //
+      // for (const index in urls) {
+      //   await Promise.all([scrapingNgheHieu(urls[index], section)]);
+      // }
+
+      for (let i = 1; i <= 6; i++) {
+        for (let j = 1; j <= 7; j += 1) {
+          await Promise.all([scraping(section, i, j)]);
+        }
+      }
+    }
+
+    return { message: 'done' };
+  }
+
+  async scrapingMinna() {
     // const section = 'ngu-phap';
     // const section = 'tu-vung';
     const book = 'minna-no-nihongo';
     const sections = [
       // 'hoi-thoai',
       // 'luyen-doc',
-      'luyen-nghe',
-      'bai-tap',
-      'han-tu',
+      // 'luyen-nghe',
+      // 'bai-tap',
+      // 'han-tu',
       '25-bai-doc-hieu',
-      'kiem-tra',
-      'tham-khao',
+      // 'kiem-tra',
+      // 'tham-khao',
     ];
 
+    const scraping = async (section, lesson) => {
+      if (lesson < 10) {
+        lesson = `0${lesson}`;
+      }
+
+      const url = `${book}/bai-${lesson}-${section}.html`;
+      this.minnaUrlVocabularies.push(url);
+
+      const html = await this.scrapingService.scrapingPageHtml(url);
+
+      this.saveFile(
+        `\\${book}\\${section}\\bai-${lesson}-${section}.html`,
+        html,
+      );
+    };
+
     for (const section of sections) {
-      for (let i = 1; i <= 50; i++) {
-        const url = `${book}/bai-${i}-${section}.html`;
-        this.minnaUrlVocabularies.push(url);
-
-        const html = await this.scrapingService.scrapingPageHtml(url);
-
-        this.saveFile(`\\${book}\\${section}\\bai-${i}-${section}.html`, html);
+      for (let i = 1; i <= 50; i += 2) {
+        await Promise.all([scraping(section, i), scraping(section, i + 1)]);
+        // const url = `${book}/bai-${i}-${section}.html`;
+        // this.minnaUrlVocabularies.push(url);
+        //
+        // const html = await this.scrapingService.scrapingPageHtml(url);
+        //
+        // this.saveFile(`\\${book}\\${section}\\bai-${i}-${section}.html`, html);
       }
     }
 
