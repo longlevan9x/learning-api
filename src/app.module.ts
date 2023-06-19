@@ -11,6 +11,7 @@ import { appRoutes } from './app.routes';
 import { VocabularyModule } from './modules/vocabulary/vocabulary.module';
 import { GrammarModule } from './modules/grammar/grammar.module';
 import { ScraperModule } from './modules/scraper/scraper.module';
+import { CheerioService } from './app/services/cheerio.service';
 
 @Module({
   imports: [
@@ -28,6 +29,6 @@ import { ScraperModule } from './modules/scraper/scraper.module';
     ScraperModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, CheerioService],
 })
 export class AppModule {}

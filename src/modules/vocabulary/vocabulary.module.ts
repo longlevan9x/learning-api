@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { VocabularyService } from './vocabulary.service';
 import { VocabularyController } from './vocabulary.controller';
-import { ScrapingService } from 'src/app/services/scraping.service';
+import { PuppeteerService } from 'src/app/services/puppeteer.service';
 import { VocabularySchemaModule } from 'src/app/schemas/vocabulary.schema';
 import { VocabularyRepository } from 'src/app/repositories/vocabulary.repository';
 
@@ -9,7 +9,7 @@ import { VocabularyRepository } from 'src/app/repositories/vocabulary.repository
   controllers: [VocabularyController],
   providers: [
     VocabularyService,
-    ScrapingService,
+    PuppeteerService,
     VocabularyRepository,
   ],
   imports: [VocabularySchemaModule],

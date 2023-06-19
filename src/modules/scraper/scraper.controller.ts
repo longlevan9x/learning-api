@@ -27,7 +27,7 @@ export class ScraperController {
 
   @Get('scraping')
   scraping() {
-    return this.scraperService.scraping();
+    return this.scraperService.test();
   }
 
   @Get(':id')

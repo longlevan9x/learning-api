@@ -2,13 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { CategoryRepository } from '../../app/repositories/category.repository';
 import { CreateCategoryDto } from './dto/create-category.dto';
-import { ScrapingService } from '../../app/services/scraping.service';
+import { PuppeteerService } from '../../app/services/puppeteer.service';
 
 @Injectable()
 export class CategoryService {
   constructor(
     private categoryRepository: CategoryRepository,
-    private scrapingService: ScrapingService,
+    private scrapingService: PuppeteerService,
   ) {}
 
   create(createCategoryDto: CreateCategoryDto) {

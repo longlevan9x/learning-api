@@ -4,14 +4,14 @@ import { UpdateLessonDto } from './dto/update-lesson.dto';
 import { LessonRepository } from '../../app/repositories/lesson.repository';
 import lesson from '../../app/constants/lesson';
 import { CategoryRepository } from '../../app/repositories/category.repository';
-import { ScrapingService } from '../../app/services/scraping.service';
+import { PuppeteerService } from '../../app/services/puppeteer.service';
 
 @Injectable()
 export class LessonService {
   constructor(
     private lessonRepository: LessonRepository,
     private categoryRepository: CategoryRepository,
-    private scrapingService: ScrapingService,
+    private scrapingService: PuppeteerService,
   ) {}
 
   create(createLessonDto: CreateLessonDto) {
