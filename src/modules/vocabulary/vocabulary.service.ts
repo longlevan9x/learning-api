@@ -1,13 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateVocabularyDto } from './dto/create-vocabulary.dto';
 import { UpdateVocabularyDto } from './dto/update-vocabulary.dto';
-import { PuppeteerService } from '../../app/services/puppeteer.service';
 import { VocabularyRepository } from '../../app/repositories/vocabulary.repository';
+import { IScrapingService } from '../../app/services/scraping.service';
 
 @Injectable()
 export class VocabularyService {
   constructor(
-    private scrapingService: PuppeteerService,
+    @Inject(IScrapingService)
+    private readonly scrapingService: IScrapingService,
     private vocabularyRepository: VocabularyRepository,
   ) {}
 

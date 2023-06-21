@@ -1,7 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateScraperDto } from './dto/create-scraper.dto';
 import { UpdateScraperDto } from './dto/update-scraper.dto';
-import { PuppeteerService } from '../../app/services/puppeteer.service';
 import * as path from 'node:path';
 import * as fs from 'fs';
 import { IScrapingService } from '../../app/services/scraping.service';
@@ -11,8 +10,7 @@ export class ScraperService {
   minnaUrlVocabularies = [];
 
   constructor(
-    private puppeteerService: PuppeteerService,
-    @Inject('ScrapingServiceInterface')
+    @Inject(IScrapingService)
     private readonly scrapingService: IScrapingService,
   ) {}
 
@@ -62,7 +60,7 @@ export class ScraperService {
       const url = `${book}-${section}/tuan-${week}${lesson}.html`;
       this.minnaUrlVocabularies.push(url);
 
-      const html = await this.puppeteerService.scrapingPageHtml(url);
+      const html = await this.scrapingService.scrapingPageHtml(url);
 
       this.saveFile(
         `\\${book}\\${section}\\tuan-${week}${lesson || '-1'}-${section}.html`,
@@ -74,13 +72,13 @@ export class ScraperService {
       this.minnaUrlVocabularies.push(url);
       const _us = url.split('/');
       const _u = _us[_us.length - 1].replace('.html', '');
-      const html = await this.puppeteerService.scrapingPageHtml(url);
+      const html = await this.scrapingService.scrapingPageHtml(url);
       this.saveFile(`\\${book}\\${section}\\${_u}-${section}.html`, html);
     };
 
     for (const section of sections) {
       // nghe hieu
-      // const urls = await this.puppeteerService.scrapingSoumatomeNgheHieuUrl(
+      // const urls = await this.scrapingService.scrapingSoumatomeNgheHieuUrl(
       //   `${book}-${section}`,
       // );
       //
@@ -121,7 +119,7 @@ export class ScraperService {
       const url = `${book}/bai-${lesson}-${section}.html`;
       this.minnaUrlVocabularies.push(url);
 
-      const html = await this.puppeteerService.scrapingPageHtml(url);
+      const html = await this.scrapingService.scrapingPageHtml(url);
 
       this.saveFile(
         `\\${book}\\${section}\\bai-${lesson}-${section}.html`,
@@ -135,7 +133,7 @@ export class ScraperService {
         // const url = `${book}/bai-${i}-${section}.html`;
         // this.minnaUrlVocabularies.push(url);
         //
-        // const html = await this.puppeteerService.scrapingPageHtml(url);
+        // const html = await this.scrapingService.scrapingPageHtml(url);
         //
         // this.saveFile(`\\${book}\\${section}\\bai-${i}-${section}.html`, html);
       }
@@ -144,6 +142,13 @@ export class ScraperService {
     return { message: 'done' };
   }
 
+  scrapingVocabulary() {
+    return this.scrapingService.scrapingVocabulary('', {
+      book: 'minna-no-nihongo',
+      lesson: 'bai-1',
+      section: 'tu-vung',
+    });
+  }
   findAll() {
     return `This action returns all scraper`;
   }

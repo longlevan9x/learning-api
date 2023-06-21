@@ -1,17 +1,18 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateLessonDto } from './dto/create-lesson.dto';
 import { UpdateLessonDto } from './dto/update-lesson.dto';
 import { LessonRepository } from '../../app/repositories/lesson.repository';
 import lesson from '../../app/constants/lesson';
 import { CategoryRepository } from '../../app/repositories/category.repository';
-import { PuppeteerService } from '../../app/services/puppeteer.service';
+import { IScrapingService } from '../../app/services/scraping.service';
 
 @Injectable()
 export class LessonService {
   constructor(
     private lessonRepository: LessonRepository,
     private categoryRepository: CategoryRepository,
-    private scrapingService: PuppeteerService,
+    @Inject(IScrapingService)
+    private readonly scrapingService: IScrapingService,
   ) {}
 
   create(createLessonDto: CreateLessonDto) {

@@ -5,11 +5,11 @@ import {
   CategorySchemaModule,
 } from '../../app/schemas/category.schema';
 import { CategoryRepository } from '../../app/repositories/category.repository';
-import { PuppeteerService } from 'src/app/services/puppeteer.service';
+import { ScrapingServiceInterface } from '../../app/services/scraping.service';
 
 @Module({
   imports: [CategorySchemaModule],
   controllers: [CategoryController],
-  providers: [CategoryService, CategoryRepository, PuppeteerService],
+  providers: [CategoryService, CategoryRepository, ScrapingServiceInterface],
 })
 export class CategoryModule {}

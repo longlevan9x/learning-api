@@ -30,6 +30,11 @@ export class ScraperController {
     return this.scraperService.test();
   }
 
+  @Get('vocabulary')
+  scrapingVocabulary() {
+    return this.scraperService.scrapingVocabulary();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.scraperService.findOne(+id);
