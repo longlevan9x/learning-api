@@ -16,6 +16,10 @@ export class LessonRepository {
     return this.lessonModel.find(query);
   }
 
+  findOneById(id: string) {
+    return this.lessonModel.findById(id);
+  }
+
   create(data: CreateLessonDto) {
     return this.lessonModel.create(data);
   }
@@ -30,5 +34,9 @@ export class LessonRepository {
 
   bulkCreate(listCreate) {
     return this.lessonModel.insertMany(listCreate);
+  }
+
+  bulkRemove(query?: any) {
+    return this.lessonModel.deleteMany(query);
   }
 }

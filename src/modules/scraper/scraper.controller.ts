@@ -27,7 +27,7 @@ export class ScraperController {
 
   @Get('scraping')
   scraping() {
-    return this.scraperService.test();
+    return this.scraperService.scraping();
   }
 
   @Get('vocabulary')

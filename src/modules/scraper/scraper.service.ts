@@ -38,6 +38,39 @@ export class ScraperService {
   }
 
   async scraping() {
+    // return { message: 'done' };
+
+    const books = [
+      {
+        name: 'minna-no-nihongo',
+      },
+      {
+        name: 'somatome-n2',
+        sections: ['tu-vung', 'ngu-phap', 'han-tu', 'doc-hieu', 'nghe-hieu'],
+      },
+      {
+        name: 'somatome-n3',
+        sections: ['tu-vung', 'ngu-phap', 'han-tu', 'doc-hieu', 'nghe-hieu'],
+      },
+    ];
+
+    for (const book of books) {
+      if (book.sections?.length) {
+        for (const section of book.sections) {
+          const url = book.name + `-${section}`;
+          const html = await this.scrapingService.scrapingPageHtml(url);
+          this.saveFile(`\\${book.name}-${section}.html`, html);
+        }
+      } else {
+        const url = book.name;
+        const html = await this.scrapingService.scrapingPageHtml(url);
+        this.saveFile(`\\${book.name}.html`, html);
+      }
+    }
+
+    return { message: 'done' };
+  }
+  async scrapingLesson() {
     return { message: 'done' };
 
     const book = 'somatome-n3';

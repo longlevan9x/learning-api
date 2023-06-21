@@ -19,6 +19,9 @@ export class LessonModel {
 
   @Prop()
   cloneUrl: string;
+
+  @Prop()
+  bookName: string;
 }
 
 export const LessonSchema = SchemaFactory.createForClass(LessonModel);

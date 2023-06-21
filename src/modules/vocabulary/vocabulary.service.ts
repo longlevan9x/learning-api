@@ -1,15 +1,20 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, LoggerService } from '@nestjs/common';
 import { CreateVocabularyDto } from './dto/create-vocabulary.dto';
 import { UpdateVocabularyDto } from './dto/update-vocabulary.dto';
 import { VocabularyRepository } from '../../app/repositories/vocabulary.repository';
 import { IScrapingService } from '../../app/services/scraping.service';
+import { LessonRepository } from '../../app/repositories/lesson.repository';
+import { CategoryRepository } from '../../app/repositories/category.repository';
 
 @Injectable()
 export class VocabularyService {
+  private logger: LoggerService;
   constructor(
     @Inject(IScrapingService)
     private readonly scrapingService: IScrapingService,
     private vocabularyRepository: VocabularyRepository,
+    private lessonRepository: LessonRepository,
+    private categoryRepository: CategoryRepository,
   ) {}
 
   create(createVocabularyDto: CreateVocabularyDto) {
@@ -37,9 +42,26 @@ export class VocabularyService {
     return `This action removes a #${id} vocabulary`;
   }
 
-  async scraping(lessonId: string, scrapingUrl: string) {
+  async scraping(lessonId: string, categoryId: string, scrapingUrl: string) {
+    const lesson = await this.lessonRepository.findOneById(lessonId);
+
+    if (!lesson) {
+      return { message: 'fail lesson' };
+    }
+
+    if (lesson.categoryId !== categoryId) {
+      return { message: 'fail category' };
+    }
+
+    const category = await this.categoryRepository.findOneById(categoryId);
     let vocabularies: any[] = await this.scrapingService.scrapingVocabulary(
       scrapingUrl,
+      {
+        categoryName: category.name,
+        book: 'minna-no-nihongo',
+        lesson: 'bai-1',
+        section: 'tu-vung',
+      },
     );
 
     vocabularies = vocabularies.map((v) => {
@@ -47,7 +69,9 @@ export class VocabularyService {
       return v;
     });
 
-    await this.vocabularyRepository.bulkDelete({ lessonId });
+    await this.vocabularyRepository.bulkDelete({
+      lessonId: lessonId.toString(),
+    });
     await this.vocabularyRepository.bulkCreate(vocabularies);
 
     return { message: 'done' };

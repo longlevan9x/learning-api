@@ -14,6 +14,7 @@ export class CheerioService implements IScrapingService {
   async scrapingVocabulary(
     scrapingUrl: string,
     extra?: {
+      categoryName: string;
       book: string;
       section: string;
       lesson: string;
@@ -26,31 +27,33 @@ export class CheerioService implements IScrapingService {
     const $ = cheerio.load(response.data);
 
     const vocabularies = [];
-    $('.search_result tbody')
-      .find('tr')
-      .each((index, el) => {
-        const childLength = $(el).children().length;
-        const childrenElement = $(el).children();
-        if (childLength === 5) {
-          const vocabulary = {
-            vocabulary: childrenElement.eq(0).text().trim(),
-            kanji: childrenElement.eq(1).text().trim(),
-            vietnam_sound: childrenElement.eq(2).text().trim(),
-            mediaUrl: childrenElement.eq(3).find('audio').attr('src'),
-            mean: childrenElement.eq(4).text().trim(),
-          };
+    if (extra.categoryName === 'Minna') {
+      $('.search_result tbody')
+        .find('tr')
+        .each((index, el) => {
+          const childLength = $(el).children().length;
+          const childrenElement = $(el).children();
+          if (childLength === 5) {
+            const vocabulary = {
+              vocabulary: childrenElement.eq(0).text().trim(),
+              kanji: childrenElement.eq(1).text().trim(),
+              vietnam_sound: childrenElement.eq(2).text().trim(),
+              mediaUrl: childrenElement.eq(3).find('audio').attr('src'),
+              mean: childrenElement.eq(4).text().trim(),
+            };
 
-          vocabularies.push(vocabulary);
-        } else if (childLength === 3) {
-          const vocabulary = {
-            vocabulary: childrenElement.eq(0).text().trim(),
-            mediaUrl: childrenElement.eq(1).find('audio').attr('src'),
-            mean: childrenElement.eq(2).text().trim(),
-          };
+            vocabularies.push(vocabulary);
+          } else if (childLength === 3) {
+            const vocabulary = {
+              vocabulary: childrenElement.eq(0).text().trim(),
+              mediaUrl: childrenElement.eq(1).find('audio').attr('src'),
+              mean: childrenElement.eq(2).text().trim(),
+            };
 
-          vocabularies.push(vocabulary);
-        }
-      });
+            vocabularies.push(vocabulary);
+          }
+        });
+    }
 
     return vocabularies;
   }
@@ -59,8 +62,26 @@ export class CheerioService implements IScrapingService {
     return Promise.resolve([]);
   }
 
-  async scrapingLesson(scrapingUrl: string): Promise<any[]> {
-    return Promise.resolve([]);
+  async scrapingLesson(
+    scrapingUrl: string,
+    extra?: { book: string },
+  ): Promise<any[]> {
+    const url = this.baseUrl + `${extra.book}.html`;
+    console.log(url)
+    const response = await axios.get(url);
+    const $ = cheerio.load(response.data);
+
+    const lessons = [];
+
+    $('.category tr > td > a').each((index, el) => {
+      lessons.push({
+        cloneUrl: $(el).attr('href'),
+        name: $(el).text(),
+        bookName: extra.book,
+      });
+    });
+
+    return lessons;
   }
 
   async scrapingPageHtml(url: string): Promise<string> {

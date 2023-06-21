@@ -8,6 +8,7 @@ export interface IScrapingService {
   scrapingVocabulary(
     scrapingUrl: string,
     extra?: {
+      categoryName?: string;
       book?: string;
       section?: string;
       lesson?: string;
@@ -15,6 +16,7 @@ export interface IScrapingService {
   ): Promise<any[]>;
   scrapingCategory(): Promise<any[]>;
   scrapingLesson(scrapingUrl: string): Promise<any[]>;
+  scrapingLesson(scrapingUrl: string, extra?: { book: string }): Promise<any[]>;
   scrapingGrammar(scrapingUrl: string): Promise<any[]>;
   scrapingPageHtml(url: string): Promise<string>;
 }

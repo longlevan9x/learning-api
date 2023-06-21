@@ -32,9 +32,7 @@ export class VocabularyRepository {
     return this.vocabularyModel.insertMany(listCreate);
   }
 
-  bulkDelete(lessonId) {
-    return this.vocabularyModel.deleteMany({
-      lessonId: lessonId.toString(),
-    });
+  bulkDelete(query?: any) {
+    return this.vocabularyModel.deleteMany(query);
   }
 }

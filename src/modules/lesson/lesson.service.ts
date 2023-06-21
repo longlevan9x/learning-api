@@ -5,6 +5,7 @@ import { LessonRepository } from '../../app/repositories/lesson.repository';
 import lesson from '../../app/constants/lesson';
 import { CategoryRepository } from '../../app/repositories/category.repository';
 import { IScrapingService } from '../../app/services/scraping.service';
+import { CategoryModel } from '../../app/schemas/category.schema';
 
 @Injectable()
 export class LessonService {
@@ -45,9 +46,15 @@ export class LessonService {
   }
 
   async scraping(categoryId: string) {
-    const category = await this.categoryRepository.findOneById(categoryId);
+    const category: CategoryModel = await this.categoryRepository.findOneById(
+      categoryId,
+    );
+
     let lessons: any[] = await this.scrapingService.scrapingLesson(
       category.cloneUrl,
+      {
+        book: category.cloneUrl.replace(/\//g, ''),
+      },
     );
 
     lessons = lessons.map((l) => {
@@ -55,8 +62,9 @@ export class LessonService {
       return l;
     });
 
+    // await this.lessonRepository.bulkRemove();
     await this.lessonRepository.bulkCreate(lessons);
-    console.log('done');
+    console.log('done', lessons);
 
     return { message: 'done' };
   }
