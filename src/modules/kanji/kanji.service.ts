@@ -2,15 +2,15 @@ import { Inject, Injectable } from '@nestjs/common';
 import { CreateKanjiDto } from './dto/create-kanji.dto';
 import { UpdateKanjiDto } from './dto/update-kanji.dto';
 import { IScrapingService } from '../../app/services/scraping.service';
-import { VocabularyRepository } from '../../app/repositories/vocabulary.repository';
 import { LessonRepository } from '../../app/repositories/lesson.repository';
+import { KanjiRepository } from '../../app/repositories/kanji.repository';
 
 @Injectable()
 export class KanjiService {
   constructor(
     @Inject(IScrapingService)
     private readonly scrapingService: IScrapingService,
-    private vocabularyRepository: VocabularyRepository,
+    private kanjiRepository: KanjiRepository,
     private lessonRepository: LessonRepository,
   ) {}
   create(createKanjiDto: CreateKanjiDto) {
@@ -23,7 +23,7 @@ export class KanjiService {
       _query.lessonId = query.lessonId;
     }
 
-    return this.vocabularyRepository.findAll(_query);
+    return this.kanjiRepository.findAll(_query);
   }
 
   findOne(id: number) {
@@ -54,10 +54,10 @@ export class KanjiService {
       return v;
     });
 
-    await this.vocabularyRepository.bulkDelete({
+    await this.kanjiRepository.bulkDelete({
       lessonId: lessonId.toString(),
     });
-    await this.vocabularyRepository.bulkCreate(vocabularies);
+    await this.kanjiRepository.bulkCreate(vocabularies);
 
     return { message: 'done' };
   }
