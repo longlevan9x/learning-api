@@ -1,22 +1,20 @@
-import { Inject, Injectable, LoggerService } from '@nestjs/common';
-import { CreateVocabularyDto } from './dto/create-vocabulary.dto';
-import { UpdateVocabularyDto } from './dto/update-vocabulary.dto';
-import { VocabularyRepository } from '../../app/repositories/vocabulary.repository';
+import { Inject, Injectable } from '@nestjs/common';
+import { CreateKanjiDto } from './dto/create-kanji.dto';
+import { UpdateKanjiDto } from './dto/update-kanji.dto';
 import { IScrapingService } from '../../app/services/scraping.service';
+import { VocabularyRepository } from '../../app/repositories/vocabulary.repository';
 import { LessonRepository } from '../../app/repositories/lesson.repository';
 
 @Injectable()
-export class VocabularyService {
-  private logger: LoggerService;
+export class KanjiService {
   constructor(
     @Inject(IScrapingService)
     private readonly scrapingService: IScrapingService,
     private vocabularyRepository: VocabularyRepository,
     private lessonRepository: LessonRepository,
   ) {}
-
-  create(createVocabularyDto: CreateVocabularyDto) {
-    return 'This action adds a new vocabulary';
+  create(createKanjiDto: CreateKanjiDto) {
+    return 'This action adds a new kanji';
   }
 
   findAll(query?: { lessonId: string }) {
@@ -29,15 +27,15 @@ export class VocabularyService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} vocabulary`;
+    return `This action returns a #${id} kanji`;
   }
 
-  update(id: number, updateVocabularyDto: UpdateVocabularyDto) {
-    return `This action updates a #${id} vocabulary`;
+  update(id: number, updateKanjiDto: UpdateKanjiDto) {
+    return `This action updates a #${id} kanji`;
   }
 
   remove(id: number) {
-    return `This action removes a #${id} vocabulary`;
+    return `This action removes a #${id} kanji`;
   }
 
   async scraping(lessonId: string, categoryId: string, scrapingUrl: string) {
@@ -47,11 +45,7 @@ export class VocabularyService {
       return { message: 'fail lesson' };
     }
 
-    if (lesson.categoryId !== categoryId) {
-      return { message: 'fail category' };
-    }
-
-    let vocabularies: any[] = await this.scrapingService.scrapingVocabulary(
+    let vocabularies: any[] = await this.scrapingService.scrapingKanji(
       lesson.cloneUrl,
     );
 

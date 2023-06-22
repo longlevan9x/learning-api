@@ -27,6 +27,9 @@ export class VocabularyModel {
 
   @Prop()
   cloneUrl: string;
+
+  @Prop()
+  vocabularyType: string[];
 }
 
 export const VocabularySchema = SchemaFactory.createForClass(VocabularyModel);

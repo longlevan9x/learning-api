@@ -12,6 +12,7 @@ import { VocabularyModule } from './modules/vocabulary/vocabulary.module';
 import { GrammarModule } from './modules/grammar/grammar.module';
 import { ScraperModule } from './modules/scraper/scraper.module';
 import { CheerioService } from './app/services/cheerio.service';
+import { KanjiModule } from './modules/kanji/kanji.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { CheerioService } from './app/services/cheerio.service';
     VocabularyModule,
     GrammarModule,
     ScraperModule,
+    KanjiModule,
   ],
   controllers: [AppController],
   providers: [AppService, CheerioService],

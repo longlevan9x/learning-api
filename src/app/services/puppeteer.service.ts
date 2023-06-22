@@ -346,4 +346,8 @@ export class PuppeteerService implements IScrapingService {
       });
     });
   }
+
+  scrapingKanji(scrapingUrl: string): Promise<any[]> {
+    return Promise.resolve([]);
+  }
 }

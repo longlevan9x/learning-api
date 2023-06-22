@@ -5,15 +5,7 @@ import { Inject } from '@nestjs/common';
 export interface IScrapingService {
   scraping(): string;
   scrapingVocabulary(scrapingUrl: string): Promise<any[]>;
-  scrapingVocabulary(
-    scrapingUrl: string,
-    extra?: {
-      categoryName?: string;
-      book?: string;
-      section?: string;
-      lesson?: string;
-    },
-  ): Promise<any[]>;
+  scrapingKanji(scrapingUrl: string): Promise<any[]>;
   scrapingCategory(): Promise<any[]>;
   scrapingLesson(scrapingUrl: string): Promise<any[]>;
   scrapingLesson(scrapingUrl: string, extra?: { book: string }): Promise<any[]>;

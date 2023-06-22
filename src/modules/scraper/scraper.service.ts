@@ -174,11 +174,7 @@ export class ScraperService {
   }
 
   scrapingVocabulary() {
-    return this.scrapingService.scrapingVocabulary('', {
-      book: 'minna-no-nihongo',
-      lesson: 'bai-1',
-      section: 'tu-vung',
-    });
+    return this.scrapingService.scrapingVocabulary('');
   }
   findAll() {
     return `This action returns all scraper`;
