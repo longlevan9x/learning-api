@@ -56,7 +56,10 @@ export class PuppeteerService implements IScrapingService {
     const browser = await this.launchBrowser();
     const page = await browser.newPage();
 
-    await page.goto(this.baseUrl + url, { waitUntil: 'networkidle0' });
+    await page.goto(this.baseUrl + url, {
+      waitUntil: 'networkidle0',
+      timeout: 0,
+    });
     // await page.goto(this.baseUrl + url, { waitUntil: 'domcontentloaded' });
     // Set screen size
     // await page.setViewport({ width: 500, height: 500 });

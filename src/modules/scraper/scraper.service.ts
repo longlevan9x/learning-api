@@ -37,7 +37,11 @@ export class ScraperService {
     });
   }
 
-  async scraping() {
+  // async scraping() {
+  //   return { message: 'done' };
+  // }
+
+  async scrapingSection() {
     // return { message: 'done' };
 
     const books = [
@@ -70,13 +74,13 @@ export class ScraperService {
 
     return { message: 'done' };
   }
-  async scrapingLesson() {
+  async scraping() {
     return { message: 'done' };
 
     const book = 'somatome-n3';
     // const book = 'somatome-n2';
     const sections = [
-      // 'tu-vung',
+      'tu-vung',
       // 'ngu-phap',
       // 'han-tu',
       // 'doc-hieu',
@@ -95,10 +99,7 @@ export class ScraperService {
 
       const html = await this.scrapingService.scrapingPageHtml(url);
 
-      this.saveFile(
-        `\\${book}\\${section}\\tuan-${week}${lesson || '-1'}-${section}.html`,
-        html,
-      );
+      this.saveFile(`\\${book}-${section}\\tuan-${week}${lesson}.html`, html);
     };
 
     const scrapingNgheHieu = async (url, section) => {
@@ -130,22 +131,22 @@ export class ScraperService {
   }
 
   async scrapingMinna() {
-    // const section = 'ngu-phap';
-    // const section = 'tu-vung';
     const book = 'minna-no-nihongo';
     const sections = [
-      // 'hoi-thoai',
-      // 'luyen-doc',
-      // 'luyen-nghe',
-      // 'bai-tap',
-      // 'han-tu',
+      // 'tu-vung',
+      'ngu-phap',
+      'hoi-thoai',
+      'luyen-doc',
+      'luyen-nghe',
+      'bai-tap',
+      'han-tu',
       '25-bai-doc-hieu',
-      // 'kiem-tra',
-      // 'tham-khao',
+      'kiem-tra',
+      'tham-khao',
     ];
 
     const scraping = async (section, lesson) => {
-      if (lesson < 10) {
+      if (section === '25-bai-doc-hieu' && lesson < 10) {
         lesson = `0${lesson}`;
       }
 
@@ -154,10 +155,7 @@ export class ScraperService {
 
       const html = await this.scrapingService.scrapingPageHtml(url);
 
-      this.saveFile(
-        `\\${book}\\${section}\\bai-${lesson}-${section}.html`,
-        html,
-      );
+      this.saveFile(`\\${book}\\bai-${lesson}-${section}.html`, html);
     };
 
     for (const section of sections) {
