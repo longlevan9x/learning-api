@@ -10,6 +10,9 @@ async function bootstrap() {
   app.enableCors({
     // allowedHeaders: '*',
     origin: false,
+    optionsSuccessStatus: 204,
+    preflightContinue: false,
+    credentials: true
   });
   // const options = {
   //   origin: '*',
