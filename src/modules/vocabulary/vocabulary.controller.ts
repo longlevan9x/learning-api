@@ -28,6 +28,7 @@ export class VocabularyController {
 
   @Post('/scraping')
   scraping(@Body() body) {
+    return '123';
     return this.vocabularyService.scraping(
       body.lessonId,
       body.categoryId,
