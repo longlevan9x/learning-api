@@ -14,9 +14,7 @@ import { UpdateVocabularyDto } from './dto/update-vocabulary.dto';
 
 @Controller()
 export class VocabularyController {
-  constructor(
-    private readonly vocabularyService: VocabularyService,
-  ) {}
+  constructor(private readonly vocabularyService: VocabularyService) {}
 
   @Post()
   create(@Body() createVocabularyDto: CreateVocabularyDto) {
@@ -45,9 +43,9 @@ export class VocabularyController {
   @Patch(':id')
   update(
     @Param('id') id: string,
-    @Body() UpdateVocabularyDto: UpdateVocabularyDto,
+    @Body() updateVocabularyDto: UpdateVocabularyDto,
   ) {
-    return this.vocabularyService.update(+id, UpdateVocabularyDto);
+    return this.vocabularyService.update(+id, updateVocabularyDto);
   }
 
   @Delete(':id')
