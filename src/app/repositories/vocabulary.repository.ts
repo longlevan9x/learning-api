@@ -13,7 +13,7 @@ export class VocabularyRepository {
   ) {}
 
   findAll(query?: { lessonId: string } | any) {
-    return this.vocabularyModel.find(query);
+    return this.vocabularyModel.find(query).limit(100);
   }
 
   create(data: CreateVocabularyDto) {
