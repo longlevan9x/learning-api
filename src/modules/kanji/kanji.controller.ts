@@ -28,11 +28,7 @@ export class KanjiController {
 
   @Post('/scraping')
   scraping(@Body() body) {
-    return this.kanjiService.scraping(
-      body.lessonId,
-      body.categoryId,
-      body.scrapingUrl,
-    );
+    return this.kanjiService.scraping(body.lessonId);
   }
 
   @Get(':id')

@@ -11,6 +11,7 @@ import {
 import { LessonService } from './lesson.service';
 import { CreateLessonDto } from './dto/create-lesson.dto';
 import { UpdateLessonDto } from './dto/update-lesson.dto';
+import { SUBJECTS } from '../../app/constants/lesson';
 
 @Controller()
 export class LessonController {
@@ -27,9 +28,9 @@ export class LessonController {
     return this.lessonService.findAll(query);
   }
 
-  @Get('/sections')
-  findAllSection() {
-    return this.lessonService.findAllSection();
+  @Get('/subjects')
+  findAllSubject() {
+    return this.lessonService.findAllSubject();
   }
 
   @Post('/scraping')

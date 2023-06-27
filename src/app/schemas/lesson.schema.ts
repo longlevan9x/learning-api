@@ -15,13 +15,13 @@ export class LessonModel {
   categoryId: string;
 
   @Prop()
-  sections: string[];
-
-  @Prop()
   cloneUrl: string;
 
   @Prop()
   bookName: string;
+
+  @Prop()
+  subjects: string[];
 }
 
 export const LessonSchema = SchemaFactory.createForClass(LessonModel);

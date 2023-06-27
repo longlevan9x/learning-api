@@ -13,7 +13,7 @@ async function bootstrap() {
     methods: ['GET,HEAD,PUT,PATCH,POST,DELETE'],
     optionsSuccessStatus: 204,
     preflightContinue: false,
-    // credentials: true,
+    credentials: true,
   });
   // const options = {
   //   origin: '*',

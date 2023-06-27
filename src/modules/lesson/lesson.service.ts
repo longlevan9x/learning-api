@@ -41,8 +41,8 @@ export class LessonService {
     return this.lessonRepository.remove(id);
   }
 
-  findAllSection() {
-    return Object.keys(lesson.SECTIONS);
+  findAllSubject() {
+    return Object.keys(lesson.SUBJECTS);
   }
 
   async scraping(categoryId: string) {
@@ -59,10 +59,27 @@ export class LessonService {
 
     lessons = lessons.map((l) => {
       l.categoryId = categoryId;
+
+      if (category.name === 'Minna') {
+        l.subjects = Object.values(lesson.SUBJECTS);
+      } else if (category.name === 'Từ vựng') {
+        l.subjects = [lesson.SUBJECTS.VOCABULARY];
+      } else if (category.name === 'Ngữ pháp') {
+        l.subjects = [lesson.SUBJECTS.GRAMMAR];
+      } else if (category.name === 'Đọc hiểu') {
+        l.subjects = [lesson.SUBJECTS.READING];
+      } else if (category.name === 'Nghe hiểu') {
+        l.subjects = [lesson.SUBJECTS.LISTENING];
+      } else if (category.name === 'Hán tự') {
+        l.subjects = [lesson.SUBJECTS.KANJI];
+      } else {
+        l.subjects = [];
+      }
+
       return l;
     });
 
-    // await this.lessonRepository.bulkRemove();
+    await this.lessonRepository.bulkRemove({ categoryId: categoryId });
     await this.lessonRepository.bulkCreate(lessons);
     console.log('done', lessons);
 

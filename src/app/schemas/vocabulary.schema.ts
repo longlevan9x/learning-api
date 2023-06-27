@@ -16,6 +16,7 @@ export class VocabularyModel {
 
   @Prop()
   kanji: string;
+
   @Prop()
   vietnam_sound: string;
 

@@ -25,7 +25,6 @@ export class KanjiService {
 
     return this.kanjiRepository.findAll(_query);
   }
-
   findOne(id: number) {
     return `This action returns a #${id} kanji`;
   }
@@ -38,7 +37,7 @@ export class KanjiService {
     return `This action removes a #${id} kanji`;
   }
 
-  async scraping(lessonId: string, categoryId: string, scrapingUrl: string) {
+  async scraping(lessonId: string) {
     const lesson = await this.lessonRepository.findOneById(lessonId);
 
     if (!lesson) {

@@ -40,15 +40,11 @@ export class VocabularyService {
     return `This action removes a #${id} vocabulary`;
   }
 
-  async scraping(lessonId: string, categoryId: string, scrapingUrl: string) {
+  async scraping(lessonId: string) {
     const lesson = await this.lessonRepository.findOneById(lessonId);
 
     if (!lesson) {
       return { message: 'fail lesson' };
-    }
-
-    if (lesson.categoryId !== categoryId) {
-      return { message: 'fail category' };
     }
 
     let vocabularies: any[] = await this.scrapingService.scrapingVocabulary(
