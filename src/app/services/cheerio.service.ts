@@ -82,7 +82,7 @@ export class CheerioService implements IScrapingService {
     scrapingUrl: string,
     extra?: { book: string },
   ): Promise<any[]> {
-    const url = this.baseUrl + `${extra.book}.html`;
+    const url = this.baseUrl + `/${extra.book}.html`;
     this.logger.log(url);
     const response = await axios.get(url);
     const $ = cheerio.load(response.data);
