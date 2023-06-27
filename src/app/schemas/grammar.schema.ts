@@ -12,7 +12,7 @@ export type GrammarDocument = HydratedDocument<GrammarModel>;
 @Schema()
 export class GrammarModel {
   @Prop()
-  name: string;
+  title: string;
 
   @Prop()
   lessonId: string;

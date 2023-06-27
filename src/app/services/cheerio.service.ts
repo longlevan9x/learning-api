@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { IScrapingService } from './scraping.service';
 import axios from 'axios';
 import * as cheerio from 'cheerio';
+import { index } from 'cheerio/lib/api/traversing';
 
 @Injectable()
 export class CheerioService implements IScrapingService {
@@ -104,8 +105,84 @@ export class CheerioService implements IScrapingService {
     return Promise.resolve('');
   }
 
-  scrapingGrammar(scrapingUrl: string): Promise<any[]> {
-    return Promise.resolve([]);
+  async scrapingGrammar(scrapingUrl: string): Promise<any[]> {
+    let url = this.baseUrl + scrapingUrl;
+
+    if (scrapingUrl.includes('minna')) {
+      url = url.replace('.html', '-ngu-phap.html');
+    }
+
+    this.logger.log('scrapingGrammar ' + url);
+
+    const response = await axios.get(url);
+    const $ = cheerio.load(response.data);
+
+    const grammars = [];
+
+    if (scrapingUrl.includes('minna')) {
+      $('div.tab_content#tab3 .slide').each((index, el) => {
+        const grammarTitle = $(el).find('.slide-title').text();
+
+        const labels = [
+          'Cấu trúc',
+          'Ý nghĩa',
+          'Giải thích & Hướng dẫn',
+          'Ví dụ',
+        ];
+
+        const listMapping = [];
+
+        $(el)
+          .find('.slide-content .khung > tbody > tr')
+          .each((index, el) => {
+            let tdTextIndex = 1;
+            if ($(el).children().length === 1) {
+              tdTextIndex = 0;
+            }
+
+            const tdText = $(el).children().eq(tdTextIndex).text().trim();
+            if (labels.includes(tdText)) {
+              listMapping.push({ title: tdText });
+            } else {
+              const lastIndex = listMapping.length - 1;
+              if (listMapping[lastIndex].title === 'Ví dụ') {
+                if (!listMapping[lastIndex]?.content?.length) {
+                  listMapping[lastIndex].content = [];
+                }
+
+                const wordRaw = $(el).find('.tudich .candich').text();
+                const wordTranslate = $(el)
+                  .find('.tudich .kqdich .nddich')
+                  .text();
+
+                listMapping[lastIndex].content.push({
+                  wordRaw,
+                  wordTranslate,
+                });
+              } else {
+                listMapping[lastIndex].content = $(el).find('td').eq(1).html();
+              }
+            }
+          });
+
+        const keyLabel = {
+          ['Cấu trúc']: 'structure',
+          ['Ý nghĩa']: 'mean',
+          ['Giải thích & Hướng dẫn']: 'explain',
+          ['Ví dụ']: 'examples',
+        };
+
+        const objectMapping = listMapping.reduce((newObj, listChild) => {
+          newObj[keyLabel[listChild.title]] = listChild.content;
+          return newObj;
+        }, {});
+
+        objectMapping.title = grammarTitle;
+        grammars.push(objectMapping);
+      });
+    }
+
+    return grammars;
   }
 
   async scrapingKanji(scrapingUrl: string): Promise<any[]> {

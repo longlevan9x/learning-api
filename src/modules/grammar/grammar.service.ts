@@ -3,6 +3,7 @@ import { CreateGrammarDto } from './dto/create-grammar.dto';
 import { UpdateVocabularyDto } from '../vocabulary/dto/update-vocabulary.dto';
 import { GrammarRepository } from '../../app/repositories/grammar.repository';
 import { IScrapingService } from '../../app/services/scraping.service';
+import { LessonRepository } from '../../app/repositories/lesson.repository';
 
 @Injectable()
 export class GrammarService {
@@ -10,6 +11,7 @@ export class GrammarService {
     @Inject(IScrapingService)
     private readonly scrapingService: IScrapingService,
     private grammarRepository: GrammarRepository,
+    private lessonRepository: LessonRepository,
   ) {}
 
   create(createGrammarDto: CreateGrammarDto) {
@@ -37,16 +39,22 @@ export class GrammarService {
     return `This action removes a #${id} vocabulary`;
   }
 
-  async scraping(lessonId: string, scrapingUrl: string) {
+  async scraping(lessonId: string) {
+    const lesson = await this.lessonRepository.findOneById(lessonId);
+
+    if (!lesson) {
+      return { message: 'fail lesson' };
+    }
+
     let listScraping: any[] = await this.scrapingService.scrapingGrammar(
-      scrapingUrl,
+      lesson.cloneUrl,
     );
 
     listScraping = listScraping.map((v) => {
       v.lessonId = lessonId.toString();
       return v;
     });
-    console.log(listScraping[0]);
+
     await this.grammarRepository.bulkDelete({ lessonId });
     await this.grammarRepository.bulkCreate(listScraping);
 

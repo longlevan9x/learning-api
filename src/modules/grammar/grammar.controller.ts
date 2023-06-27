@@ -28,8 +28,9 @@ export class GrammarController {
 
   @Post('/scraping')
   scraping(@Body() body) {
-    return this.grammarService.scraping(body.lessonId, body.scrapingUrl);
+    return this.grammarService.scraping(body.lessonId);
   }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.grammarService.findOne(id);
