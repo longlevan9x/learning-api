@@ -17,7 +17,7 @@ export const IScrapingService = Symbol('IScrapingService');
 
 export const ScrapingServiceInterface = {
   provide: IScrapingService,
-  useClass: CheerioService,
+  useClass: PuppeteerService,
 };
 
 // export const InjectIScrapingService = Inject('IScrapingService');
