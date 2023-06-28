@@ -11,6 +11,7 @@ export interface IScrapingService {
   scrapingLesson(scrapingUrl: string, extra?: { book: string }): Promise<any[]>;
   scrapingGrammar(scrapingUrl: string): Promise<any[]>;
   scrapingPageHtml(url: string): Promise<string>;
+  scrapingConversation(scrapingUrl: string): Promise<any>;
 }
 
 export const IScrapingService = Symbol('IScrapingService');

@@ -5,6 +5,7 @@ import { LessonModule } from './modules/lesson/lesson.module';
 import { VocabularyModule } from './modules/vocabulary/vocabulary.module';
 import { GrammarModule } from './modules/grammar/grammar.module';
 import { KanjiModule } from './modules/kanji/kanji.module';
+import { ConversationModule } from './modules/conversation/conversation.module';
 
 export const appRoutes: Routes = [
   {
@@ -30,5 +31,9 @@ export const appRoutes: Routes = [
   {
     path: 'kanjis',
     module: KanjiModule,
+  },
+  {
+    path: 'conversations',
+    module: ConversationModule,
   },
 ];

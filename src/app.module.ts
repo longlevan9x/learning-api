@@ -13,6 +13,7 @@ import { GrammarModule } from './modules/grammar/grammar.module';
 import { ScraperModule } from './modules/scraper/scraper.module';
 import { CheerioService } from './app/services/cheerio.service';
 import { KanjiModule } from './modules/kanji/kanji.module';
+import { ConversationModule } from './modules/conversation/conversation.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { KanjiModule } from './modules/kanji/kanji.module';
     GrammarModule,
     ScraperModule,
     KanjiModule,
+    ConversationModule,
   ],
   controllers: [AppController],
   providers: [AppService, CheerioService],

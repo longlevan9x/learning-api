@@ -8,14 +8,15 @@ import { index } from 'cheerio/lib/api/traversing';
 export class CheerioService implements IScrapingService {
   private readonly logger = new Logger(CheerioService.name);
 
-  baseUrl = 'https://longlevan9x.github.io/html-page';
+  vnJpClubBaseUrl = 'https://longlevan9x.github.io/html-page';
+  maziiBaseUrl = 'https://mina.mazii.net/api/';
 
   scraping(): string {
     return '12312';
   }
 
   async scrapingVocabulary(scrapingUrl: string): Promise<any> {
-    let url = this.baseUrl + scrapingUrl;
+    let url = this.vnJpClubBaseUrl + scrapingUrl;
 
     if (scrapingUrl.includes('minna')) {
       url = url.replace('.html', '-tu-vung.html');
@@ -83,7 +84,7 @@ export class CheerioService implements IScrapingService {
     scrapingUrl: string,
     extra?: { book: string },
   ): Promise<any[]> {
-    const url = this.baseUrl + `/${extra.book}.html`;
+    const url = this.vnJpClubBaseUrl + `/${extra.book}.html`;
     this.logger.log(url);
     const response = await axios.get(url);
     const $ = cheerio.load(response.data);
@@ -106,7 +107,7 @@ export class CheerioService implements IScrapingService {
   }
 
   async scrapingGrammar(scrapingUrl: string): Promise<any[]> {
-    let url = this.baseUrl + scrapingUrl;
+    let url = this.vnJpClubBaseUrl + scrapingUrl;
 
     if (scrapingUrl.includes('minna')) {
       url = url.replace('.html', '-ngu-phap.html');
@@ -186,7 +187,7 @@ export class CheerioService implements IScrapingService {
   }
 
   async scrapingKanji(scrapingUrl: string): Promise<any[]> {
-    let url = this.baseUrl + scrapingUrl;
+    let url = this.vnJpClubBaseUrl + scrapingUrl;
 
     if (scrapingUrl.includes('minna')) {
       url = url.replace('.html', '-han-tu.html');
@@ -228,5 +229,47 @@ export class CheerioService implements IScrapingService {
     this.logger.log('scrapingKanji: done');
 
     return kanjis;
+  }
+
+  async scrapingConversation(scrapingUrl: string) {
+    let url = this.vnJpClubBaseUrl + scrapingUrl;
+
+    if (scrapingUrl.includes('minna')) {
+      url = url.replace('.html', '-hoi-thoai.html');
+    }
+
+    this.logger.log('scrapingKanji ' + url);
+    const response = await axios.get(url);
+    const $ = cheerio.load(response.data);
+
+    const conversations = [];
+    if (scrapingUrl.includes('minna')) {
+      const tabEl = $('.tab_content#tab3');
+      const title = tabEl.find('p > span > strong').text();
+      const audioFile = tabEl.find('div  audio  source').attr('src');
+      const imageUrl = tabEl.find('p > img').attr('src');
+
+      const conversation: any = {
+        title: title,
+        audioFile: audioFile,
+        image: imageUrl,
+        converses: [],
+      };
+
+      tabEl.find('table.khung tr').each((index, el) => {
+        const character = $(el).children().eq(0).text();
+        const converse = $(el).children().eq(1).find('.candich').text();
+        const mean = $(el).children().eq(1).find('.kqdich').text();
+        conversation.converses.push({
+          character,
+          converse,
+          mean,
+        });
+      });
+
+      conversations.push(conversation);
+    }
+
+    return conversations;
   }
 }
