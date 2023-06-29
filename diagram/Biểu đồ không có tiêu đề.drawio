@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-06-29T07:52:19.166Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" etag="-PXo38jF_8l4eE7i2ceQ" version="21.5.2" type="github">
+<mxfile host="app.diagrams.net" modified="2023-06-29T07:52:47.833Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" etag="3EpgocTG_YyQOkI0isUP" version="21.5.2" type="github">
   <diagram name="Trang-1" id="Eg0rM6GmB08_mQ8uZG3P">
     <mxGraphModel dx="2077" dy="1876" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -1044,6 +1044,19 @@
         <mxCell id="J2h68-0Ry3v_XBsJnCvk-81" value="1-n" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="J2h68-0Ry3v_XBsJnCvk-80">
           <mxGeometry x="0.906" relative="1" as="geometry">
             <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="J2h68-0Ry3v_XBsJnCvk-85" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="ikSkg1-S1yT57ZmoGbDg-5" source="J2h68-0Ry3v_XBsJnCvk-46" target="J2h68-0Ry3v_XBsJnCvk-67">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="69" y="465" />
+              <mxPoint x="69" y="705" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="J2h68-0Ry3v_XBsJnCvk-86" value="1-n" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="J2h68-0Ry3v_XBsJnCvk-85">
+          <mxGeometry x="0.2781" relative="1" as="geometry">
+            <mxPoint x="10" y="76" as="offset" />
           </mxGeometry>
         </mxCell>
       </root>
