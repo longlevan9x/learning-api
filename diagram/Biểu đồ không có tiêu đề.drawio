@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2023-06-30T04:24:02.629Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" etag="3PfsmaAhTfoacLicLJ3-" version="21.5.2" type="github">
+<mxfile host="app.diagrams.net" modified="2023-06-30T04:28:50.075Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" etag="tQZP4xnY7CYO7PAGjVav" version="21.5.2" type="github">
   <diagram name="Trang-1" id="Eg0rM6GmB08_mQ8uZG3P">
-    <mxGraphModel dx="3010" dy="2377" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2363" dy="2019" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -4427,6 +4427,38 @@
               <mxPoint x="950" y="1515" />
             </Array>
           </mxGeometry>
+        </mxCell>
+        <mxCell id="EjIhSHntMq5fqGs0h5J2-1166" value="conversation Item" style="whiteSpace=wrap;html=1;startSize=30;fontStyle=1;" vertex="1" parent="EjIhSHntMq5fqGs0h5J2-411">
+          <mxGeometry x="1490" y="1553" width="140" height="42" as="geometry" />
+        </mxCell>
+        <mxCell id="EjIhSHntMq5fqGs0h5J2-1171" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="EjIhSHntMq5fqGs0h5J2-411" source="EjIhSHntMq5fqGs0h5J2-1169" target="EjIhSHntMq5fqGs0h5J2-1166">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EjIhSHntMq5fqGs0h5J2-1172" value="Yes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="EjIhSHntMq5fqGs0h5J2-1171">
+          <mxGeometry x="-0.1213" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="EjIhSHntMq5fqGs0h5J2-1174" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="EjIhSHntMq5fqGs0h5J2-411" source="EjIhSHntMq5fqGs0h5J2-1169" target="EjIhSHntMq5fqGs0h5J2-1173">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1335" y="1645" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="EjIhSHntMq5fqGs0h5J2-1175" value="No" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="EjIhSHntMq5fqGs0h5J2-1174">
+          <mxGeometry x="-0.1248" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="EjIhSHntMq5fqGs0h5J2-1169" value="conversaiton, lisenPractice" style="rhombus;whiteSpace=wrap;html=1;startSize=30;fontStyle=1;" vertex="1" parent="EjIhSHntMq5fqGs0h5J2-411">
+          <mxGeometry x="1270" y="1535" width="130" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="EjIhSHntMq5fqGs0h5J2-1170" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="EjIhSHntMq5fqGs0h5J2-411" source="EjIhSHntMq5fqGs0h5J2-1036" target="EjIhSHntMq5fqGs0h5J2-1169">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="EjIhSHntMq5fqGs0h5J2-1173" value="exersiceItem" style="whiteSpace=wrap;html=1;startSize=30;fontStyle=1;" vertex="1" parent="EjIhSHntMq5fqGs0h5J2-411">
+          <mxGeometry x="1500" y="1615" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="EjIhSHntMq5fqGs0h5J2-709" value="Excersice&amp;nbsp; Database" style="swimlane;whiteSpace=wrap;html=1;swimlaneFillColor=#1b0410;fillColor=#647687;fontColor=#ffffff;strokeColor=#314354;" vertex="1" parent="1">
           <mxGeometry x="2910" y="1120" width="2160" height="1180" as="geometry" />
