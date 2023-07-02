@@ -14,6 +14,7 @@ import { ScraperModule } from './modules/scraper/scraper.module';
 import { CheerioService } from './app/services/cheerio.service';
 import { KanjiModule } from './modules/kanji/kanji.module';
 import { ConversationModule } from './modules/conversation/conversation.module';
+import TypeOrmMysql from "./app/databases/typeOrm.mysql";
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { ConversationModule } from './modules/conversation/conversation.module';
     ScraperModule,
     KanjiModule,
     ConversationModule,
+    TypeOrmMysql,
   ],
   controllers: [AppController],
   providers: [AppService, CheerioService],
