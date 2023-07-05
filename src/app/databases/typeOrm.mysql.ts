@@ -21,5 +21,5 @@ export default TypeOrmModule.forRoot({
   autoLoadEntities: true,
   synchronize: true,
 
-  migrations: ['src/migrations/*.ts', 'dist/migrations/*{.ts,.js}'],
+  // migrations: ['src/migrations/*.ts', 'dist/migrations/*{.ts,.js}'],
 });

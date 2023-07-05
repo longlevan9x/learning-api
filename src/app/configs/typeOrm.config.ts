@@ -8,6 +8,7 @@ import {
   MYSQL_USER,
 } from '../../environment';
 import { Book } from '../../modules/book/entities/book.entity';
+import * as path from 'path';
 
 export default new DataSource({
   type: DB_TYPE,
@@ -16,5 +17,7 @@ export default new DataSource({
   username: MYSQL_USER,
   password: MYSQL_PASSWORD,
   database: MYSQL_DATABASE,
-  entities: [Book],
+  // entities: [Book],
+  // entities: [path.resolve() + '/**/**/*.entity{.ts,.js}'],
+  migrations: ['src/app/migrations/*.ts'],
 });
