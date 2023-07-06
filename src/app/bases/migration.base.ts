@@ -25,6 +25,18 @@ export default abstract class MigrationBase {
     return option;
   }
 
+  increments(name = 'id') {
+    this.integer(name);
+
+    const option = this._newOption();
+    option.isAutoIncrement();
+    option.isUnsigned();
+    option.isNotNull();
+    option.isPrimaryKey();
+
+    return option;
+  }
+
   integer(name: string) {
     this.columns.push({ name: name, type: 'int' });
 

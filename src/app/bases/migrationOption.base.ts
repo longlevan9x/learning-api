@@ -16,6 +16,12 @@ export default class {
     return this;
   }
 
+  length(value = 0) {
+    this.columns[this.index]['length'] = value;
+
+    return this;
+  }
+
   isNull() {
     this.columns[this.index]['isNotNull'] = false;
     return this;

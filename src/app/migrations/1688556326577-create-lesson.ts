@@ -3,18 +3,25 @@ import MigrationBase from '../bases/migration.base';
 
 export class CreateLesson1688556326577
   extends MigrationBase
-  implements MigrationInterface
-{
+  implements MigrationInterface {
   tableName = 'lessons';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
+    if (await queryRunner.hasTable(this.getTableName())) {
+      return;
+    }
 
-    await queryRunner.query(
-      `CREATE TABLE \`${this.getTableName()}\` (\`id\` int NOT NULL AUTO_INCREMENT, \`name\` varchar(255) NOT NULL, \`categoryId\` int NOT NULL, \`isActive\` tinyint NOT NULL DEFAULT 1, \`cloneUrl\` varchar(255) NOT NULL, \`audioFile\` varchar(255) NOT NULL, PRIMARY KEY (\`id\`)) ENGINE=InnoDB`,
-    );
+    this.increments('id');
+    this.string('name').isNotNull();
+    this.integer('categoryId').isNull();
+    this.tinyint('isActive').isNotNull().default(1);
+    this.string('cloneUrl').isNull();
+    this.string('audioFile').isNull();
+
+    await queryRunner.query(this.bindingCreateTable().toSql());
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`DROP TABLE \`${this.getTableName()}\``);
+    await queryRunner.query(this.bindingDropTable().toSql());
   }
 }

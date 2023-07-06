@@ -3,11 +3,14 @@ import MigrationBase from '../bases/migration.base';
 
 export class CreateCategory1688556312765
   extends MigrationBase
-  implements MigrationInterface
-{
+  implements MigrationInterface {
   tableName = 'categories';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
+    if (await queryRunner.hasTable(this.getTableName())) {
+      return;
+    }
+
     this.integer('id').isAutoIncrement().isNotNull().isPrimaryKey();
 
     this.string('name', 255).isNotNull();
