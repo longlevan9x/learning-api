@@ -17,6 +17,9 @@ export default new DataSource({
   username: MYSQL_USER,
   password: MYSQL_PASSWORD,
   database: MYSQL_DATABASE,
+  ssl: {
+    rejectUnauthorized: true,
+  },
   // entities: [Book],
   // entities: [path.resolve() + '/**/**/*.entity{.ts,.js}'],
   migrations: ['src/app/migrations/*.ts'],

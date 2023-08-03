@@ -16,6 +16,9 @@ export default TypeOrmModule.forRoot({
   username: MYSQL_USER,
   password: MYSQL_PASSWORD,
   database: MYSQL_DATABASE,
+  ssl: {
+    rejectUnauthorized: true,
+  },
   // entities: [Book],
   // entities: ['dist/**/*.entity{.ts,.js}'],
   autoLoadEntities: true,
