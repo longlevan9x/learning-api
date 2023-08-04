@@ -1,6 +1,6 @@
 import { CheerioService } from './cheerio.service';
-import { PuppeteerService } from './puppeteer.service';
-import { Inject } from '@nestjs/common';
+// import { PuppeteerService } from './puppeteer.service';
+// import { Inject } from '@nestjs/common';
 
 export interface IScrapingService {
   scraping(): string;
