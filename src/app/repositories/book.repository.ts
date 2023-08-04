@@ -8,9 +8,8 @@ import { UpdateBookDto } from '../../modules/book/dto/update-book.dto';
 @Injectable()
 export class BookRepository {
   constructor(
-    @InjectModel(BookModel.name) private bookModel: Model<BookModel>
-  ) {
-  }
+    @InjectModel(BookModel.name) private bookModel: Model<BookModel>,
+  ) {}
 
   findAll() {
     return this.bookModel.find();
