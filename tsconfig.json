@@ -8,7 +8,10 @@
     "allowSyntheticDefaultImports": true,
     "target": "esnext",
     "moduleResolution": "node",
-    "lib": ["esnext"],
+    "lib": [
+      "esnext",
+      "dom"
+    ],
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
